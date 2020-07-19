@@ -27,8 +27,9 @@ namespace LinkShortener.Repositories
         /// Get link by full link
         /// </summary>
         /// <param name="fullLink"></param>
+        /// <param name="userId"></param>
         /// <returns>Return 'null' if not found.</returns>
-        Task<Link?> GetByFullLink(string fullLink);
+        Task<Link?> GetByFullLink(string fullLink, string userId);
 
         /// <summary>
         /// Create new link

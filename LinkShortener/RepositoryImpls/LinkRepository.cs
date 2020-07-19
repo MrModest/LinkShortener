@@ -28,9 +28,9 @@ namespace LinkShortener.RepositoryImpls
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<Link?> GetByFullLink(string fullLink)
+        public async Task<Link?> GetByFullLink(string fullLink, string userId)
         {
-            return await _links.Find(l => l.FullLink == fullLink)
+            return await _links.Find(l => l.FullLink == fullLink && l.UserId == userId)
                 .FirstOrDefaultAsync();
         }
 

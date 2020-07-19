@@ -24,11 +24,10 @@ namespace LinkShortener.ServiceImpls
         
         public async Task<string> GetShortAlias(string fullLink, string userId)
         {
-            var existedLink = await _linkRepository.GetByFullLink(fullLink);
+            var existedLink = await _linkRepository.GetByFullLink(fullLink, userId);
 
-            return existedLink != null 
-                ? existedLink.ShortAlias 
-                : await GenerateShortAlias(fullLink, userId);
+            return existedLink?.ShortAlias 
+                ?? await GenerateShortAlias(fullLink, userId);
         }
 
         public async Task<string?> GetFullLinkAndIncreaseVisitCount(string shortAlias)

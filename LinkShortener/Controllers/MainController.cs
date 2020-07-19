@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
 
-using LinkShortener.Entities;
 using LinkShortener.Services;
 
 namespace LinkShortener.Controllers
@@ -33,11 +33,11 @@ namespace LinkShortener.Controllers
         }
 
         [HttpGet("api/getAll")]
-        public async Task<IEnumerable<Link>> GetAllLinks()
+        public async Task<IEnumerable<dynamic>> GetAllLinks()
         {
             var links = await _linkService.GetAllLinks(_userId);
 
-            return links;
+            return links.Select(l => new { ShortLink = $"{_domainName}/{l.ShortAlias}", l.VisitedCount });
         }
 
         [HttpGet("/{shortAlias}")]
