@@ -45,6 +45,11 @@ namespace LinkShortener.Controllers
         {
             var fullLink = await _linkService.GetFullLink(shortAlias);
 
+            if (fullLink == null)
+            {
+                return NotFound($"Not found link by alias '{shortAlias}'");
+            }
+
             return Redirect(fullLink);
         }
     }

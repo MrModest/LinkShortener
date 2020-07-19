@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+using LinkShortener.Configurations;
+
 namespace LinkShortener
 {
     public class Startup
@@ -18,6 +20,8 @@ namespace LinkShortener
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.SetupMongoDbSettings(Configuration);
+            
             services.AddControllers();
         }
 

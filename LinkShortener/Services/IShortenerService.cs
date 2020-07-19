@@ -6,10 +6,10 @@ namespace LinkShortener.Services
     public interface IShortenerService
     {
         /// <summary>
-        /// Generate or get exists short alias for given full link
+        /// Generate short string by integer seed.
         /// </summary>
-        /// <param name="fullLink"></param>
+        /// <param name="seed"></param>
         /// <returns></returns>
-        string GetShortAlias(string fullLink);
+        string GenerateShortString(int seed);
     }
 }
