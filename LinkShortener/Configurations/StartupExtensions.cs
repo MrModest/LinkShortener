@@ -19,7 +19,7 @@ namespace LinkShortener.Configurations
         public static void ResolveDependencies(this IServiceCollection services)
         {
             services.AddScoped<ILinkRepository, LinkRepository>();
-            services.AddTransient<ILinkService, ILinkService>();
+            services.AddTransient<ILinkService, LinkService>();
             services.AddTransient<IShortenerService, ShortenerService>();
         }
         
@@ -31,11 +31,14 @@ namespace LinkShortener.Configurations
             services.AddSingleton<ILinksDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<LinksDatabaseSettings>>().Value);
 
-            AddIndexes(configuration);
+            //AddIndexes(configuration);
             
             BsonClassMap.RegisterClassMap<Link>(cm => 
             {
                 cm.AutoMap();
+                cm.MapProperty(l => l.ShortAlias).SetElementName("ShortAlias");
+                cm.MapProperty(l => l.FullLink).SetElementName("FullLink");
+                cm.MapProperty(l => l.VisitedCount).SetElementName("VisitedCount");
                 cm.MapCreator(l => new Link(l.Id, l.ShortAlias, l.FullLink, l.VisitedCount));
             });
         }

@@ -22,16 +22,14 @@ namespace LinkShortener.Controllers
             _domainName = configuration.GetValue<string>("DomainName");
         }
         
-        [HttpPost]
-        [Route("api/shorten")]
+        [HttpGet("api/shorten")]
         public async Task<string> GetShortLink(string fullLink)
         {
             var shortAlias = await _linkService.GetShortAlias(fullLink);
             return $"{_domainName}/{shortAlias}";
         }
 
-        [HttpGet]
-        [Route("api/getAll")]
+        [HttpGet("api/getAll")]
         public async Task<IEnumerable<Link>> GetAllLinks()
         {
             var links = await _linkService.GetAllLinks();
@@ -39,8 +37,7 @@ namespace LinkShortener.Controllers
             return links;
         }
 
-        [HttpGet]
-        [Route("/{shortAlias}")]
+        [HttpGet("/{shortAlias}")]
         public async Task<IActionResult> RedirectFromShort(string shortAlias)
         {
             var fullLink = await _linkService.GetFullLink(shortAlias);

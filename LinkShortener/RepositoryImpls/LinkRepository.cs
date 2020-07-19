@@ -11,7 +11,7 @@ namespace LinkShortener.RepositoryImpls
     {
         private readonly IMongoCollection<Link> _links;
 
-        LinkRepository(ILinksDatabaseSettings databaseSettings)
+        public LinkRepository(ILinksDatabaseSettings databaseSettings)
         {
             var client = new MongoClient(databaseSettings.ConnectionString);
             var database = client.GetDatabase(databaseSettings.DatabaseName);
