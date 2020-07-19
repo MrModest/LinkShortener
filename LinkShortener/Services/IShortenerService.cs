@@ -11,5 +11,12 @@ namespace LinkShortener.Services
         /// <param name="seed"></param>
         /// <returns></returns>
         string GenerateShortString(int seed);
+
+        /// <summary>
+        /// Restore seed from string
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        int RestoreSeedFromString(string str);
     }
 }

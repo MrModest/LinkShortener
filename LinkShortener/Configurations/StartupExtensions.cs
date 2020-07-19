@@ -7,11 +7,22 @@ using MongoDB.Driver;
 
 using LinkShortener.Data;
 using LinkShortener.Entities;
+using LinkShortener.Repositories;
+using LinkShortener.RepositoryImpls;
+using LinkShortener.ServiceImpls;
+using LinkShortener.Services;
 
 namespace LinkShortener.Configurations
 {
     public static class StartupExtensions
     {
+        public static void ResolveDependencies(this IServiceCollection services)
+        {
+            services.AddScoped<ILinkRepository, LinkRepository>();
+            services.AddTransient<ILinkService, ILinkService>();
+            services.AddTransient<IShortenerService, ShortenerService>();
+        }
+        
         public static void SetupMongoDbSettings(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<LinksDatabaseSettings>(

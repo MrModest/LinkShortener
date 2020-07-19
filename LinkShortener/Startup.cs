@@ -22,6 +22,8 @@ namespace LinkShortener
         {
             services.SetupMongoDbSettings(Configuration);
             
+            services.ResolveDependencies();
+            
             services.AddControllers();
         }
 
