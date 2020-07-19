@@ -22,13 +22,13 @@ namespace LinkShortener.ServiceImpls
             _linkRepository = linkRepository;
         }
         
-        public async Task<string> GetShortAlias(string fullLink)
+        public async Task<string> GetShortAlias(string fullLink, string userId)
         {
             var existedLink = await _linkRepository.GetByFullLink(fullLink);
 
             return existedLink != null 
                 ? existedLink.ShortAlias 
-                : await GenerateShortAlias(fullLink);
+                : await GenerateShortAlias(fullLink, userId);
         }
 
         public async Task<string?> GetFullLinkAndIncreaseVisitCount(string shortAlias)
@@ -38,15 +38,15 @@ namespace LinkShortener.ServiceImpls
             return link?.FullLink;
         }
 
-        public Task<IEnumerable<Link>> GetAllLinks()
+        public Task<IEnumerable<Link>> GetAllLinks(string userId)
         {
-            return _linkRepository.GetAll();
+            return _linkRepository.GetAll(userId);
         }
 
         // 'GetHashCode() for String' does not guarantee unique code for different strings, but, nevertheless, the chance of collisions is not so high.
         // So, I use it and try to write a value to the DB, given the presence of an index in the database,
         // which will throw an error  if will getting collision and code will try again with a new id.
-        private async Task<string> GenerateShortAlias(string fullLink)
+        private async Task<string> GenerateShortAlias(string fullLink, string userId)
         {
             var tryCount = 0;
 
@@ -57,7 +57,7 @@ namespace LinkShortener.ServiceImpls
                     var id = ObjectId.GenerateNewId().ToString();
                     var shortAlias = _shortenerService.GenerateShortString(id.GetHashCode());
 
-                    var newLink = new Link(id, shortAlias, fullLink);
+                    var newLink = new Link(id, userId, shortAlias, fullLink);
 
                     await _linkRepository.CreateNewLink(newLink);
                 

@@ -11,10 +11,10 @@ namespace LinkShortener.Repositories
     public interface ILinkRepository
     {
         /// <summary>
-        /// Get all links
+        /// Get all links for user
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<Link>> GetAll();
+        Task<IEnumerable<Link>> GetAll(string userId);
         
         /// <summary>
         /// Get link by alias

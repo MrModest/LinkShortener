@@ -14,8 +14,9 @@ namespace LinkShortener.Services
         /// Get short alias for shirt url
         /// </summary>
         /// <param name="fullLink"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        Task<string> GetShortAlias(string fullLink);
+        Task<string> GetShortAlias(string fullLink, string userId);
 
         /// <summary>
         /// Get full link and increase visit count
@@ -25,9 +26,10 @@ namespace LinkShortener.Services
         Task<string?> GetFullLinkAndIncreaseVisitCount(string shortAlias);
 
         /// <summary>
-        /// Get all existed links
+        /// Get all existed links for user
         /// </summary>
+        /// /// <param name="userId"></param>
         /// <returns></returns>
-        Task<IEnumerable<Link>> GetAllLinks();
+        Task<IEnumerable<Link>> GetAllLinks(string userId);
     }
 }

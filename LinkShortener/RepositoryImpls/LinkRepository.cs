@@ -19,18 +19,18 @@ namespace LinkShortener.RepositoryImpls
             _links = database.GetCollection<Link>(databaseSettings.LinksCollectionName);
         }
         
-        public async Task<IEnumerable<Link>> GetAll() =>
-            await _links.Find(book => true).ToListAsync();
+        public async Task<IEnumerable<Link>> GetAll(string userId) =>
+            await _links.Find(l => l.UserId == userId).ToListAsync();
 
         public async Task<Link?> GetByAlias(string alias)
         {
-            return await _links.Find(link => link.ShortAlias == alias)
+            return await _links.Find(l => l.ShortAlias == alias)
                 .FirstOrDefaultAsync();
         }
 
         public async Task<Link?> GetByFullLink(string fullLink)
         {
-            return await _links.Find(link => link.FullLink == fullLink)
+            return await _links.Find(l => l.FullLink == fullLink)
                 .FirstOrDefaultAsync();
         }
 
@@ -44,8 +44,8 @@ namespace LinkShortener.RepositoryImpls
         {
             var options = new FindOneAndUpdateOptions<Link> { ReturnDocument = ReturnDocument.After};
             return await _links.FindOneAndUpdateAsync<Link>(
-                link => link.ShortAlias == shortAlias,
-                Builders<Link>.Update.Inc(link => link.VisitedCount, 1), 
+                l => l.ShortAlias == shortAlias,
+                Builders<Link>.Update.Inc(l => l.VisitedCount, 1), 
                 options);
         }
     }

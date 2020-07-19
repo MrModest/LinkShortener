@@ -36,10 +36,11 @@ namespace LinkShortener.Configurations
             BsonClassMap.RegisterClassMap<Link>(cm => 
             {
                 cm.AutoMap();
+                cm.MapProperty(l => l.UserId).SetElementName("UserId");
                 cm.MapProperty(l => l.ShortAlias).SetElementName("ShortAlias");
                 cm.MapProperty(l => l.FullLink).SetElementName("FullLink");
                 cm.MapProperty(l => l.VisitedCount).SetElementName("VisitedCount");
-                cm.MapCreator(l => new Link(l.Id, l.ShortAlias, l.FullLink, l.VisitedCount));
+                cm.MapCreator(l => new Link(l.Id, l.UserId, l.ShortAlias, l.FullLink, l.VisitedCount));
             });
         }
 

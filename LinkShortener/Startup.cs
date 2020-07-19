@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using LinkShortener.Configurations;
+using LinkShortener.Middleware;
 
 namespace LinkShortener
 {
@@ -17,9 +18,16 @@ namespace LinkShortener
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+            
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+            
             services.SetupMongoDbSettings(Configuration);
             
             services.ResolveDependencies();
@@ -27,13 +35,16 @@ namespace LinkShortener
             services.AddControllers();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSession();
+
+            app.UseMiddleware<UserMarkerMiddleware>();
 
             app.UseHttpsRedirection();
 
