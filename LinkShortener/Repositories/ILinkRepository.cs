@@ -38,10 +38,10 @@ namespace LinkShortener.Repositories
         Task<Link> CreateNewLink(Link link);
 
         /// <summary>
-        /// Update link
+        /// Increment visited count and return updated link
         /// </summary>
-        /// <param name="link"></param>
+        /// <param name="shortAlias"></param>
         /// <returns></returns>
-        Task<Link> UpdateLink(Link link);
+        Task<Link> IncreaseVisitedCountByAlias(string shortAlias);
     }
 }

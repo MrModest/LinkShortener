@@ -40,11 +40,11 @@ namespace LinkShortener.RepositoryImpls
             return link;
         }
 
-        public async Task<Link> UpdateLink(Link updatedLink)
+        public async Task<Link> IncreaseVisitedCountByAlias(string shortAlias)
         {
             var options = new FindOneAndUpdateOptions<Link> { ReturnDocument = ReturnDocument.After};
             return await _links.FindOneAndUpdateAsync<Link>(
-                link => link.Id == updatedLink.Id,
+                link => link.ShortAlias == shortAlias,
                 Builders<Link>.Update.Inc(link => link.VisitedCount, 1), 
                 options);
         }

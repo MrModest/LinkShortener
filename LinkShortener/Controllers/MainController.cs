@@ -40,7 +40,7 @@ namespace LinkShortener.Controllers
         [HttpGet("/{shortAlias}")]
         public async Task<IActionResult> RedirectFromShort(string shortAlias)
         {
-            var fullLink = await _linkService.GetFullLink(shortAlias);
+            var fullLink = await _linkService.GetFullLinkAndIncreaseVisitCount(shortAlias);
 
             if (fullLink == null)
             {

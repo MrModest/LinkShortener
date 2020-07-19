@@ -18,11 +18,11 @@ namespace LinkShortener.Services
         Task<string> GetShortAlias(string fullLink);
 
         /// <summary>
-        /// Get full link
+        /// Get full link and increase visit count
         /// </summary>
         /// <param name="shortAlias"></param>
         /// <returns>Return 'null' if not found.</returns>
-        Task<string?> GetFullLink(string shortAlias);
+        Task<string?> GetFullLinkAndIncreaseVisitCount(string shortAlias);
 
         /// <summary>
         /// Get all existed links

@@ -31,18 +31,11 @@ namespace LinkShortener.ServiceImpls
                 : await GenerateShortAlias(fullLink);
         }
 
-        public async Task<string?> GetFullLink(string shortAlias)
+        public async Task<string?> GetFullLinkAndIncreaseVisitCount(string shortAlias)
         {
-            var link = await _linkRepository.GetByAlias(shortAlias);
-            if (link == null)
-            {
-                return null;
-            }
-            
-            link.VisitedCount++;
-            await _linkRepository.UpdateLink(link);
+            var link = await _linkRepository.IncreaseVisitedCountByAlias(shortAlias);
 
-            return link.FullLink;
+            return link?.FullLink;
         }
 
         public Task<IEnumerable<Link>> GetAllLinks()
